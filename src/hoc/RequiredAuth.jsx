@@ -1,7 +1,23 @@
-import React from "react";
+import React,{useContext} from "react";
+import { AuthContext } from '../context/AuthContext';
+import { Navigate, useLocation } from 'react-router-dom';
 
 const RequiredAuth = ({ children }) => {
-  return children;
+    const {auth}=useContext(AuthContext);
+    const {pathname}=useLocation();
+    
+    if(auth){
+      return(
+         children
+      )
+    }else{
+       return(
+         <Navigate to="/login" 
+         state={{from:pathname}}  
+         replace/>
+      )
+    }
+  
 };
 
 export default RequiredAuth;
